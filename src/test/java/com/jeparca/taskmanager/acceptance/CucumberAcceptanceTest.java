@@ -1,14 +1,16 @@
 package com.jeparca.taskmanager.acceptance;
 
-import org.junit.runner.RunWith;
+import org.junit.platform.suite.api.IncludeEngines;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.Suite;
+import org.springframework.test.context.ActiveProfiles;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-	features = "src/test/resources/features",
-	plugin = {"pretty", "html: target/cucumber.html"},
-	glue = "com.jeparca.taskmanager.acceptance")
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features")
+@SelectPackages("com.jeparca.taskmanager.acceptance")
+@ActiveProfiles("test")
 public class CucumberAcceptanceTest {
 }

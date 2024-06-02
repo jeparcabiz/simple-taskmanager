@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:4.4
+    container_name: mongodb
+    networks: 
+      - db
+    volumes:
+      - mongo-data:/data/db
+  taskmanager:
+    container_name: taskmanager
+    networks: 
+      - db
+      - backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+volumes:
+  mongo-data:
+
+networks:
+  db:
+  backend:
