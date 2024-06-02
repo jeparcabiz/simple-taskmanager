@@ -11,17 +11,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jeparca.taskmanager.domain.model.Task;
 import com.jeparca.taskmanager.domain.repository.TaskRepository;
+import com.jeparca.taskmanager.infrastructure.config.AbstractMongoDbTestContainer;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
@@ -33,29 +28,12 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
-@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @CucumberContextConfiguration
-public class StepDefs {
+public class StepDefs extends AbstractMongoDbTestContainer {
 
 	private final static String TASKS_ENDPOINT = "/tasks";
-	private static final String MONGODB_VERSION = "mongo:7.0.11";
 	
-	@Container
-	@ServiceConnection
-	private static MongoDBContainer database;
-	
-	static {
-		database = new MongoDBContainer(MONGODB_VERSION);
-		database.start();
-	}
-	
-	@DynamicPropertySource
-	static void configureProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.data.mongodb.database", () -> "test");
-		registry.add("spring.data.mongodb.uri", () -> database.getConnectionString()  + "/test");
-	}
-
 	@LocalServerPort
 	private Integer port;
 	
