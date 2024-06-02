@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jeparca.taskmanager.domain.model.Task;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -57,8 +58,7 @@ public class StepDefs extends SpringIntegrationTest {
 	
 	@When("Customer creates a task")
 	public void create_task() throws JsonProcessingException, Exception {
-		// TODO: Waiting to create domain model
-		Object task = null;
+		Task task = new Task(title, description, dueDate, tags);
 		mockMvc.perform(
 				post(TASKS_ENDPOINT)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +77,12 @@ public class StepDefs extends SpringIntegrationTest {
 	
 	@Given("there are tasks in system")
 	public void tasks_in_system() {
-		// TODO: Waiting to create domain 
+		Task task1 = new Task("Test title 1", "Test description 1", LocalDate.now().plusDays(20), null);
+		Task task2 = new Task("Test title 2", "Test description 2", LocalDate.now().plusDays(15), List.of("test1, test2, tag2"));
+		Task task3 = new Task("Test title 3", "Test description 3", LocalDate.now().plusDays(10), List.of("test3, test2, tag1"));
+		Task task4 = new Task("Test title 4", "Test description 4", LocalDate.now().plusDays(30), null);
+		Task task5 = new Task("Test title 5", "Test description 5", LocalDate.now().plusDays(1), List.of("test1110, testing, tag"));
+		// TODO: Waiting to implement domain repository
 	}
 	
 	@When("Customer lists all tasks")
