@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeparca.taskmanager.domain.model.Task;
+import com.jeparca.taskmanager.domain.repository.TaskRepository;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -28,6 +29,7 @@ public class StepDefs extends SpringIntegrationTest {
 	private final static String TASKS_ENDPOINT = "/tasks";
 	
 	private final MockMvc mockMvc;
+	private final TaskRepository taskRepository;
 	
 	private final ObjectMapper om = new ObjectMapper();
 	
@@ -82,7 +84,11 @@ public class StepDefs extends SpringIntegrationTest {
 		Task task3 = new Task("Test title 3", "Test description 3", LocalDate.now().plusDays(10), List.of("test3, test2, tag1"));
 		Task task4 = new Task("Test title 4", "Test description 4", LocalDate.now().plusDays(30), null);
 		Task task5 = new Task("Test title 5", "Test description 5", LocalDate.now().plusDays(1), List.of("test1110, testing, tag"));
-		// TODO: Waiting to implement domain repository
+		taskRepository.save(task1);
+		taskRepository.save(task2);
+		taskRepository.save(task3);
+		taskRepository.save(task4);
+		taskRepository.save(task5);
 	}
 	
 	@When("Customer lists all tasks")
