@@ -14,6 +14,6 @@ public interface TaskRepository {
 	List<Task> findAll();
 	void deleteAll();
 	List<Task> findByDueDateLessThan(LocalDate dueDate);
-	void deleteAllById(List<String> ids);
+	void delete(Task task);
 	
 }

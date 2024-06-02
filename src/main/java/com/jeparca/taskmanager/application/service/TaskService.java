@@ -36,7 +36,7 @@ public class TaskService implements CreateTaskUseCase, ListTasksUseCase, DeleteT
 	
 	@Override
 	public void deleteAllTasks(List<Task> tasks) {
-		taskRepository.deleteAllById(tasks.stream().map(Task::getId).toList());
+		tasks.forEach(task -> taskRepository.delete(task));
 	}
 
 }
